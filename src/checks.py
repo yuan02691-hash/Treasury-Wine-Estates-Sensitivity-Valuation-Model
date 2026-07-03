@@ -36,6 +36,10 @@ def check_inputs(cfg: dict) -> list[str]:
     if base["nwc_pct_revenue"] < 0.15:
         raise ValueError("NWC% looks too low for an inventory-heavy wine business")
     notes.append("working-capital intensity consistent with wine inventory cycle")
+
+    if base["capex_pct_revenue"] < base["dna_pct_revenue"]:
+        notes.append("WARN terminal value: capex below D&A in perpetuity slightly "
+                     "favours FCFF — review reinvestment assumption before real use")
     return notes
 
 

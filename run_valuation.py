@@ -61,7 +61,7 @@ def main() -> None:
         "enterprise_value": r.enterprise_value, "equity_value": r.equity_value,
         "value_per_share_aud": r.value_per_share, "tv_share_of_ev": r.tv_share_of_ev,
     } for r in results]).set_index("scenario")
-    summary.to_csv(os.path.join(OUT, "scenario_summary.csv"))
+    summary.to_csv(os.path.join(OUT, "scenario_summary.csv"), encoding="utf-8-sig")
     print("\n== scenario summary (A$m; per-share in A$) ==")
     print(summary.round(2).to_string())
 
@@ -110,7 +110,7 @@ def _plot_sensitivity(base_proj, cfg: dict, company: dict) -> None:
     tbl = sensitivity_table(base_proj, cfg["sensitivity"]["wacc_range"],
                             cfg["sensitivity"]["terminal_growth_range"],
                             company["net_debt"], company["shares_outstanding_m"])
-    tbl.to_csv(os.path.join(OUT, "sensitivity_table.csv"))
+    tbl.to_csv(os.path.join(OUT, "sensitivity_table.csv"), encoding="utf-8-sig")
 
     fig, ax = plt.subplots(figsize=(8, 4.8))
     data = tbl.to_numpy(dtype=float)

@@ -82,6 +82,15 @@ run_valuation.py           # entry point: validate -> value -> plot
 outputs/                   # generated charts + CSV tables (committed for the README)
 ```
 
+## Known simplifications
+
+- D&A, capex and working capital scale with revenue; in perpetuity capex (6.0% of
+  revenue) sits slightly below D&A (6.2%), which marginally favours terminal FCFF —
+  the checks layer flags this on every run so a reviewer can't miss it.
+- Single-segment model: TWE's Penfolds / Premium / Commercial divisions are not
+  modelled separately; the scenario margin paths proxy for mix shift.
+- Net debt is held constant across the horizon (no explicit debt schedule).
+
 ## Disclaimer
 
 Inputs approximate TWE's published FY2024 results and mid-2025 market context and are
