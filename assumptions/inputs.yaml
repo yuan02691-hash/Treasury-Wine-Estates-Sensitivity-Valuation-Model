@@ -1,0 +1,58 @@
+# ============================================================
+# Model inputs — Treasury Wine Estates (ASX: TWE)
+# All monetary figures in A$ millions unless noted.
+#
+# Figures approximate TWE's published FY2024 results (June FY-end)
+# and mid-2025 market context. They are deliberately simplified for
+# methodology demonstration — update this file before any real use.
+# Sources to refresh from: TWE annual report, RBA (risk-free), ASX quote.
+# ============================================================
+
+company:
+  name: Treasury Wine Estates
+  ticker: TWE.AX
+  fy_end: June
+  shares_outstanding_m: 810.0        # ~post-DAOU raise share count
+  net_debt: 1700.0                    # incl. lease liabilities, post-acquisition
+  price_snapshot_aud: 8.00            # context only (mid-2025); not a model input
+
+base_financials:                      # FY2024 approximations
+  revenue: 2740.0                     # net sales revenue
+  ebit_margin: 0.24                   # EBITS margin (pre one-offs)
+  tax_rate: 0.30                      # AU corporate rate
+  dna_pct_revenue: 0.062              # depreciation & amortisation / revenue
+  capex_pct_revenue: 0.060            # maintenance + growth capex / revenue
+  nwc_pct_revenue: 0.32               # net working capital / revenue (wine inventory-heavy)
+
+wacc:
+  risk_free: 0.043                    # AU 10Y govt yield (update from RBA/AFR)
+  erp: 0.055                          # equity risk premium
+  beta: 0.70                          # levered beta vs ASX200
+  cost_of_debt_pretax: 0.062          # marginal borrowing rate
+  target_debt_to_value: 0.25          # target capital structure D/V
+  rate_scenarios:                     # parallel shifts applied to rf AND cost of debt
+    easing: -0.010
+    base: 0.0
+    tightening: 0.010
+
+projection:
+  years: 5
+  terminal_growth: 0.025              # Gordon growth, must stay < WACC
+
+scenarios:
+  base:
+    label: "Base — steady premiumisation"
+    revenue_growth: [0.030, 0.030, 0.025, 0.025, 0.020]
+    ebit_margin_path: [0.240, 0.240, 0.242, 0.244, 0.245]
+  china_reacceleration:
+    label: "Bull — China luxury re-acceleration"
+    revenue_growth: [0.060, 0.055, 0.045, 0.040, 0.035]
+    ebit_margin_path: [0.245, 0.252, 0.258, 0.262, 0.265]
+  domestic_squeeze:
+    label: "Bear — domestic margin squeeze"
+    revenue_growth: [0.005, 0.005, 0.010, 0.010, 0.010]
+    ebit_margin_path: [0.228, 0.222, 0.220, 0.220, 0.220]
+
+sensitivity:
+  wacc_range: [0.075, 0.080, 0.085, 0.090, 0.095, 0.100, 0.105]
+  terminal_growth_range: [0.015, 0.020, 0.025, 0.030, 0.035]

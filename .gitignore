@@ -1,0 +1,11 @@
+# python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+
+# os
+Thumbs.db
+.DS_Store
+
+# note: outputs/ is intentionally committed — the README embeds those charts
