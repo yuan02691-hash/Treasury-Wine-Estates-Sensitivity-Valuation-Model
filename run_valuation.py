@@ -35,7 +35,7 @@ def main() -> None:
 
     print("== input checks ==")
     for note in checks.check_inputs(cfg):
-        print("  PASS:", note)
+        print("  " + ("" if note.startswith("WARN") else "PASS: ") + note)
 
     # WACC under rate scenarios
     wg = wacc_grid(w, base["tax_rate"])
