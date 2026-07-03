@@ -14,7 +14,7 @@ company:
   fy_end: June
   shares_outstanding_m: 810.0        # ~post-DAOU raise share count
   net_debt: 1700.0                    # incl. lease liabilities, post-acquisition
-  price_snapshot_aud: 8.00            # context only (mid-2025); not a model input
+  price_snapshot_aud: 4.24            # context only, as at late-May 2026 (ASX quote); not a model input
 
 base_financials:                      # FY2024 approximations
   revenue: 2740.0                     # net sales revenue

@@ -39,11 +39,21 @@ assumptions/inputs.yaml   ->   src/valuation.py   ->   src/checks.py   ->   outp
 
 ## Results (illustrative inputs, FY2024-based)
 
-| Scenario | WACC | Value / share | vs A$8.00 snapshot |
-|---|---|---|---|
-| Bull — China luxury re-acceleration | 7.2% | **A$12.15** | +52% |
-| Base — steady premiumisation | 7.2% | **A$10.25** | +28% |
-| Bear — domestic margin squeeze | 7.2% | **A$8.38** | +5% |
+| Scenario | WACC | Value / share |
+|---|---|---|
+| Bull — China luxury re-acceleration | 7.2% | **A$12.15** |
+| Base — steady premiumisation | 7.2% | **A$10.25** |
+| Bear — domestic margin squeeze | 7.2% | **A$8.38** |
+
+**What the gap to the market price says.** At the late-May 2026 quote of ~A$4.24, the
+market price sits below the *most conservative cell of the entire sensitivity grid*
+(A$4.54 at WACC 10.5% × g 1.5%). In other words: no plausible discount-rate assumption
+reconciles FY24-anchored cash flows with today's price — the market is pricing
+**structurally weaker operating assumptions** (margin durability, China demand, tariff
+and impairment risk) than even this model's bear case. That is exactly what scenario
+modelling is for: the grid tells you the disagreement is about cash flows, not the
+discount rate, and directs the next round of work to the operating inputs. Refresh
+`assumptions/inputs.yaml` from the latest annual report before drawing any conclusion.
 
 WACC grid: **6.27% (easing) / 7.20% (base) / 8.12% (tightening)** — a ±100bp parallel
 rate shift moves the discount rate by roughly ±90bp at the target capital structure.
@@ -58,9 +68,11 @@ rate shift moves the discount rate by roughly ±90bp at the target capital struc
 
 **Reading the sensitivity table:** at base-scenario cash flows, the per-share value
 spans **A$4.54 – A$11.91** across WACC 7.5–10.5% × terminal growth 1.5–3.5% — the
-discount-rate assumption matters more than any single operating lever, which is why
-the model treats WACC as a scenario variable rather than a constant. Terminal value
-is ~80% of EV, typical for a 5-year explicit window and flagged by the checks layer.
+discount-rate assumption moves the answer more than any single operating lever, which
+is why the model treats WACC as a scenario variable rather than a constant. Terminal
+value is ~80% of EV, typical for a 5-year explicit window and flagged by the checks
+layer. Note the market price (~A$4.24) sits just below the grid's floor — see the
+gap discussion above.
 
 ## Run it
 
@@ -93,6 +105,7 @@ outputs/                   # generated charts + CSV tables (committed for the RE
 
 ## Disclaimer
 
-Inputs approximate TWE's published FY2024 results and mid-2025 market context and are
-**deliberately simplified for methodology demonstration**. This is a modelling
-portfolio piece, not investment research or advice.
+Inputs approximate TWE's published FY2024 results; the price snapshot is a late-May
+2026 ASX quote for context only. Everything is **deliberately simplified for
+methodology demonstration**. This is a modelling portfolio piece, not investment
+research or advice.
