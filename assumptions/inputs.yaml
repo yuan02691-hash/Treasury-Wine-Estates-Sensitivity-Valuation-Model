@@ -2,33 +2,35 @@
 # Model inputs — Treasury Wine Estates (ASX: TWE)
 # All monetary figures in A$ millions unless noted.
 #
-# Figures approximate TWE's published FY2024 results (June FY-end)
-# and mid-2025 market context. They are deliberately simplified for
-# methodology demonstration — update this file before any real use.
-# Sources to refresh from: TWE annual report, RBA (risk-free), ASX quote.
+# DATA VINTAGE: refreshed 2026-07-04. Operating base = FY2025 actuals
+# (year ended 30 Jun 2025, reported Aug 2025, tweglobal.com). Market
+# inputs as at early Jul 2026. Structural ratios (D&A / capex / NWC)
+# are FY2024-derived and carried forward pending the FY2026 report.
+# Full source table: README "Data provenance". Figures remain
+# simplified for methodology demonstration.
 # ============================================================
 
 company:
   name: Treasury Wine Estates
   ticker: TWE.AX
   fy_end: June
-  shares_outstanding_m: 810.0        # ~post-DAOU raise share count
-  net_debt: 1700.0                    # incl. lease liabilities, post-acquisition
-  price_snapshot_aud: 4.24            # context only, as at late-May 2026 (ASX quote); not a model input
+  shares_outstanding_m: 810.0         # approx.; verify against latest Appendix 2A
+  net_debt: 1770.0                    # FY25 net debt incl. leases (~A$1.77b)
+  price_snapshot_aud: 4.81            # ASX quote as at 2026-07-03; context only, not a model input
 
-base_financials:                      # FY2024 approximations
-  revenue: 2740.0                     # net sales revenue
-  ebit_margin: 0.24                   # EBITS margin (pre one-offs)
+base_financials:                      # FY2025 actuals (reported Aug 2025)
+  revenue: 2900.0                     # net sales revenue, +7.2% yoy
+  ebit_margin: 0.266                  # EBITS A$770.3m / NSR A$2,900m ≈ 26.6%
   tax_rate: 0.30                      # AU corporate rate
-  dna_pct_revenue: 0.062              # depreciation & amortisation / revenue
-  capex_pct_revenue: 0.060            # maintenance + growth capex / revenue
-  nwc_pct_revenue: 0.32               # net working capital / revenue (wine inventory-heavy)
+  dna_pct_revenue: 0.062              # FY24-derived structural ratio, carried forward
+  capex_pct_revenue: 0.060            # FY24-derived structural ratio, carried forward
+  nwc_pct_revenue: 0.32               # FY24-derived; wine inventory-heavy
 
 wacc:
-  risk_free: 0.043                    # AU 10Y govt yield (update from RBA/AFR)
-  erp: 0.055                          # equity risk premium
-  beta: 0.70                          # levered beta vs ASX200
-  cost_of_debt_pretax: 0.062          # marginal borrowing rate
+  risk_free: 0.048                    # AU 10Y govt yield 4.80%, 2026-07-03 (Trading Economics)
+  erp: 0.055                          # equity risk premium (long-run AU practice range 5-6%)
+  beta: 0.70                          # levered beta vs ASX200 (approx.; verify vs data vendor)
+  cost_of_debt_pretax: 0.067          # rf + ~190bp credit spread, consistent with prior calibration
   target_debt_to_value: 0.25          # target capital structure D/V
   rate_scenarios:                     # parallel shifts applied to rf AND cost of debt
     easing: -0.010
@@ -40,18 +42,22 @@ projection:
   terminal_growth: 0.025              # Gordon growth, must stay < WACC
 
 scenarios:
+  # Margin paths rebased off the FY25 EBITS margin (26.6%); shapes preserved:
+  # base = gentle premiumisation drift, bull = +2.5pp mix gain by Y5,
+  # bear = -2pp squeeze then stabilise. H1 FY26 context: strong underlying
+  # brands but large non-cash US impairment -> statutory loss (Feb 2026).
   base:
     label: "Base — steady premiumisation"
     revenue_growth: [0.030, 0.030, 0.025, 0.025, 0.020]
-    ebit_margin_path: [0.240, 0.240, 0.242, 0.244, 0.245]
+    ebit_margin_path: [0.266, 0.266, 0.268, 0.270, 0.271]
   china_reacceleration:
     label: "Bull — China luxury re-acceleration"
     revenue_growth: [0.060, 0.055, 0.045, 0.040, 0.035]
-    ebit_margin_path: [0.245, 0.252, 0.258, 0.262, 0.265]
+    ebit_margin_path: [0.271, 0.278, 0.284, 0.288, 0.291]
   domestic_squeeze:
-    label: "Bear — domestic margin squeeze"
+    label: "Bear — margin squeeze (US/domestic)"
     revenue_growth: [0.005, 0.005, 0.010, 0.010, 0.010]
-    ebit_margin_path: [0.228, 0.222, 0.220, 0.220, 0.220]
+    ebit_margin_path: [0.254, 0.248, 0.246, 0.246, 0.246]
 
 sensitivity:
   wacc_range: [0.075, 0.080, 0.085, 0.090, 0.095, 0.100, 0.105]
